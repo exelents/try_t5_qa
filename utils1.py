@@ -31,11 +31,9 @@ from rouge_score import rouge_scorer, scoring
 from sacrebleu import corpus_bleu
 from torch import nn
 from torch.utils.data import Dataset, Sampler
-
 # from sentence_splitter import add_newline_to_end_of_each_sentence
 from transformers import BartTokenizer, EvalPrediction, PreTrainedTokenizer
 from transformers.file_utils import cached_property
-
 
 try:
     from fairseq.data.data_utils import batch_by_size
@@ -329,19 +327,6 @@ class Seq2SeqDataCollator:
             **self.dataset_kwargs,
         )
         return batch_encoding.data
-    # def _encode(self, batch) -> Dict[str, torch.Tensor]:
-    #     batch_out = {}
-    #     # TODO: remove unnesessary items
-    #     for item in batch:
-    #         for k, v in item.items():
-    #             if k in batch_out.keys():
-    #                 batch_out[k].append(v)
-    #             else:
-    #                 batch_out[k] = [v, ]
-    #
-    #     for k, v in batch_out.items():
-    #         batch_out[k] = torch.stack(v)
-    #     return batch_out
 
 
 class SortishSampler(Sampler):

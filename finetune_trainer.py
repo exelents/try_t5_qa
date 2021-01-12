@@ -19,6 +19,7 @@ import sys
 from dataclasses import dataclass, field
 from typing import Optional
 
+import torch
 import transformers
 from transformers import (
     AutoConfig,
@@ -45,7 +46,6 @@ from utils1 import (
     use_task_specific_params,
     write_txt_file,
 )
-
 
 logger = logging.getLogger(__name__)
 
@@ -381,4 +381,5 @@ def _mp_fn(index):
 
 
 if __name__ == "__main__":
+    torch.set_num_threads(48)
     main()
