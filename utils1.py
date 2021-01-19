@@ -302,6 +302,10 @@ class Seq2SeqDataCollator:
             labels = trim_batch(labels, self.pad_token_id)
             input_ids, attention_mask = trim_batch(input_ids, self.pad_token_id, attention_mask=attention_mask)
 
+        # loss function in T5 ignores indexes with -100 value
+        ignorance_indexes = torch.Tensor(labels.shape).fill_(-100).long()
+        labels = torch.where(labels == 0, ignorance_indexes, labels)
+
         batch = {
             "input_ids": input_ids,
             "attention_mask": attention_mask,
